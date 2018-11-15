@@ -21,12 +21,30 @@ import javax.crypto.spec.IvParameterSpec;
 
 
 public class DesUtil {
-
+	private static final String TAG = "DesUtil";
 	private static byte[] IV = { 0x12, 0x34, 0x56, 0x78, (byte) 0x90,
             (byte) 0xAB, (byte) 0xCD, (byte) 0xEF };
 	
 	public static DateFormat df = new SimpleDateFormat("yyyyMMdd");
+	public static String enCodeAccNbr(String msisdn) {
+		// 用des加密用户手机号，送给对接平台
+		String result = "";
 
+		try {
+			String key = "ideal123";
+			String enAccnbr = DesUtil.encrypt(msisdn, key);
+			result = enAccnbr.replaceAll("\\+", "A_a");// +是被替换的字符串，A_a是要替换成的内容
+			//result = result.replaceAll("\r|\n", "");// 去掉后面的回车换行符
+			result = URLEncoder.encode(result, "utf-8");
+			LogUtil.i(TAG,"enCodeAccNbr enAccnbr:"+enAccnbr);
+			// URl不能直接传递特殊参数+
+			// ，+会被认为是空格，所以传递时，按对端系统要求，将+替换成A_a
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return result;
+	}
 	public static String encrypt(String userTel) throws Exception {
 		ResourceBundle rb = ResourceBundle.getBundle("appconf");
 		String appCode = rb.getString("integralappCode");

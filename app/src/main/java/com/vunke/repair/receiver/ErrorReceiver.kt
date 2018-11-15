@@ -4,9 +4,10 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.text.TextUtils
-import android.util.Log
-import com.vunke.repair.activity.MainActivity
+import com.vunke.repair.deviceInfo.RepairUtils
 import com.vunke.repair.modle.ErrorInfo
+import com.vunke.repair.service.RepairService
+import com.vunke.repair.util.LogUtil
 
 /**
  * Created by zhuxi on 2018/9/27.
@@ -18,26 +19,49 @@ var TAG = "ErrorReceiver"
         try {
             var action = intent?.action;
             if (!TextUtils.isEmpty(action)){
-                Log.i(TAG,"getAction :$action")
+                LogUtil.i(TAG,"getAction :$action")
                 if (action.equals(ActonName)){
                     var errorInfo= ErrorInfo()
                     errorInfo. errorCode = intent?.getStringExtra("ErrorCode")
                     errorInfo. errorInfo = intent?.getStringExtra("ErrorInfo")
                     errorInfo. errorType = intent?.getStringExtra("ErrorType")
-                    errorInfo. errorCaused  = intent?.getStringExtra("ErrorCaused ")
-                    errorInfo. errorMessage  = intent?.getStringExtra("ErrorMessage ")
-                    Log.i(TAG,"onReceiver: error:${errorInfo.toString()}")
-                    var  intent2 = Intent(context, MainActivity::class.java)
-                    intent2.putExtra("ErrorCode",intent?.getStringExtra("ErrorCode"))
-                    intent2.putExtra("ErrorInfo",intent?.getStringExtra("ErrorInfo"))
-                    intent2.putExtra("ErrorType",intent?.getStringExtra("ErrorType"))
-                    intent2.putExtra("ErrorCaused",intent?.getStringExtra("ErrorCaused"))
-                    intent2.putExtra("ErrorMessage",intent?.getStringExtra("ErrorMessage"))
-                    context?.startActivity(intent2);
+                    errorInfo. errorCaused  = intent?.getStringExtra("ErrorCaused")
+                    errorInfo. errorMessage  = intent?.getStringExtra("ErrorMessage")
+                    LogUtil.i(TAG,"onReceiver: error:${errorInfo.toString()}")
+                    if (errorInfo?.errorCode .equals("10021")||
+                            errorInfo?.errorCode .equals("10022")||
+                            errorInfo?.errorCode .equals("10023")||
+                            errorInfo?.errorCode.equals("1404")    ){//PPPOE拨号失败
+                        LogUtil.i(TAG," PPPOE拨号失败")
+                        startRepairService(context,errorInfo);
+                    }else if(errorInfo?.errorCode .equals("10010")||
+                            errorInfo?.errorCode .equals("10011")||
+                            errorInfo?.errorCode.equals("1305")){//DHCP OR IPPOE 拨号失败
+                        LogUtil.i(TAG," DHCP/IPOE拨号失败")
+                        startRepairService(context,errorInfo);
+                    }else if(errorInfo?.errorCode.equals("9101")||errorInfo?.errorCode.equals("9103")||errorInfo?.errorCode.equals("9108")){//机顶盒帐号密码错误
+                        LogUtil.i(TAG," 机顶盒帐号密码错误")
+                        startRepairService(context,errorInfo);
+                    }else{
+                        RepairUtils.startRepairActivity(errorInfo,context!!,false)
+                    }
                 }
             }
         }catch (e:Exception){
             e.printStackTrace()
         }
     }
+
+
+    private fun startRepairService(context: Context?, errorInfo:ErrorInfo?) {
+        var intent2 = Intent(context, RepairService::class.java)
+        intent2.putExtra("ErrorCode", errorInfo?.errorCode)
+        intent2.putExtra("ErrorInfo",errorInfo?.errorInfo)
+        intent2.putExtra("ErrorType", errorInfo?.errorType)
+        intent2.putExtra("ErrorCaused", errorInfo?.errorCaused)
+        intent2.putExtra("ErrorMessage", errorInfo?.errorMessage)
+        context?.startService(intent2)
+    }
+
+
 }

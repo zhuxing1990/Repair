@@ -1,15 +1,154 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@android:color/transparent"
     tools:context="com.vunke.repair.activity.MainActivity">
 
-    <ImageView
-        android:id="@+id/main_qrcode"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        />
+    <RelativeLayout
+        android:layout_width="877dp"
+        android:layout_height="490dp"
+        android:background="@drawable/relavitv_backround_shape"
+        android:layout_centerInParent="true">
+        <RelativeLayout
+            android:id="@+id/main_relat1"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:background="@drawable/relatve_backround2_shape">
+            <ImageView
+                android:id="@+id/main_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_centerVertical="true"
+                android:src="@mipmap/dianxin4"/>
+            <TextView
+                android:id="@+id/main_dx"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/color_white"
+                android:layout_toRightOf="@+id/main_icon"
+                android:textSize="30sp"
+                android:layout_centerVertical="true"
+                android:textStyle="bold"
+                android:text="@string/zgdx"/>
+            <TextView
+                android:id="@+id/main_error"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:textSize="16sp"
+                android:textColor="@color/color_white"
+                />
+        </RelativeLayout>
 
-</LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/main_relat2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/main_relat1"
+            android:orientation="horizontal"
+            android:layout_marginTop="30dp">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/main_qrcode"
+                    android:layout_marginLeft="58dp"
+                    android:layout_marginRight="38dp"
+
+                    android:layout_width="240dp"
+                    android:layout_height="240dp" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="24sp"
+                    android:layout_marginTop="40dp"
+                    android:textColor="@color/color_grey1"
+                    android:gravity="center"
+                    android:text="@string/wxsys"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="2dp"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="30dp"
+                android:background="@mipmap/xuxian">
+            </LinearLayout>
+
+
+
+            <LinearLayout
+                android:layout_width="410dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:orientation="vertical">
+                <TextView
+                    android:id="@+id/main_errtitie"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/color_red1"
+                    android:textSize="24dp"
+                    android:text="@string/errinfo"/>
+
+                <RelativeLayout
+                    android:id="@+id/linear_repairlayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="90dp">
+                    <Button
+                        android:id="@+id/main_but_repair"
+                        android:layout_width="160dp"
+                        android:layout_height="56dp"
+                        android:focusable="true"
+                        android:textSize="20sp"
+                        android:clickable="false"
+                        android:layout_alignParentLeft="true"
+                        android:visibility="gone"
+                        android:background="@drawable/button_rotate_selector"
+                        android:text="@string/repair"/>
+                    <Button
+                        android:id="@+id/main_but_back"
+                        android:layout_width="160dp"
+                        android:layout_height="56dp"
+                        android:focusable="true"
+                        android:textSize="20sp"
+                        android:background="@drawable/button_rotate_selector"
+                        android:layout_alignParentRight="true"
+                        android:text="@string/goback"/>
+                </RelativeLayout>
+                <TextView
+                    android:id="@+id/main_user"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:text="@string/username"
+                    android:textColor="@color/color_grey1"
+                    android:textSize="26sp" />
+
+                <TextView
+                    android:id="@+id/main_username"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/color_grey1"
+                    android:textSize="26sp" />
+                <ImageView
+                    android:layout_marginTop="20dp"
+                    android:layout_width="410dp"
+                    android:layout_height="80dp"
+                    android:visibility="gone"
+                    android:src="@mipmap/bz"/>
+            </LinearLayout>
+        </LinearLayout>
+
+    </RelativeLayout>
+
+
+</RelativeLayout>

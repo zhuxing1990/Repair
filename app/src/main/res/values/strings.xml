@@ -1,3 +1,10 @@
 <resources>
-    <string name="app_name">Repair</string>
+    <string name="app_name">扫码排障</string>
+    <string name="zgdx">中国电信湖南公司</string>
+    <string name="username">业务账号:</string>
+    <string name="name">CD007554106002@VOD</string>
+    <string name="errinfo">错误信息</string>
+    <string name="repair">一键修复</string>
+    <string name="goback">返回</string>
+    <string name="wxsys">使用微信扫一扫,快速申报故障!</string>
 </resources>

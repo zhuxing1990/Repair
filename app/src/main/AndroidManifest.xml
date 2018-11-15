@@ -1,15 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.vunke.repair">
+    <!--获取网络权限-->
+    <uses-permission android:name="android.permission.INTERNET"></uses-permission>
+    <!-- 读取SDCard数据权限 -->
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"></uses-permission>
+    <!-- 在SDCard中创建与删除文件权限 -->
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"/>
+    <!-- 往SDCard写入数据权限 -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"></uses-permission>
+    <uses-permission android:name="android.permission.READ_LOGS" />
+    <uses-permission android:name="android.permission.GET_TASKS" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"></uses-permission>
 
     <application
+        android:name=".base.BaseApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity.MainActivity">
+        <activity android:name=".activity.MainActivity"
+            android:theme="@style/Theme.AppCompat.NoActionBar2"
+            android:clearTaskOnLaunch="true"
+            android:launchMode="singleTask"
+            android:stateNotNeeded="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -21,6 +37,22 @@
                 <action android:name="android.stb.SEND_ERROR_MESSAGE"></action>
             </intent-filter>
         </receiver>
+        <receiver android:name=".receiver.SaveDeviceInfoReceiver"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.vunke.repair.savedata"></action>
+                <action android:name="com.vunke.repair.showView"></action>
+                <action android:name="com.vunke.repair.NotShow"></action>
+            </intent-filter>
+        </receiver>
+        <service android:name=".service.RepairService"
+            >
+        </service>
+        <provider
+            android:authorities="com.vunke.repair.device"
+            android:name=".db.DeviceInfoProvider"
+            android:exported="false">
+        </provider>
     </application>
 
 </manifest>
